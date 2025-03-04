@@ -125,34 +125,45 @@ affinity: {}
 edgeui:
   apps:
     edgeui:
+      ignore: true 
       replicaCount: 2
       image:
         repository: nginx
         tag: stable
+      
 
 middleware:
   apps:
     web_server:
+      ignore: true
       replicaCount: 1
       image:
         repository: nginx
         tag: stable
+
     rest_server: 
+      ignore: true 
       replicaCount: 1
       image:
         repository: nginx
         tag: stable
-    indicative_server: 
+
+    indicative_server:
+      ignore: true 
       replicaCount: 1
       image:
         repository: nginx
         tag: stable
+
     reporting_server: 
+      ignore: true 
       replicaCount: 1
       image:
         repository: nginx
         tag: stable
+
     search_server: 
+      ignore: true 
       replicaCount: 1
       image:
         repository: nginx
@@ -161,11 +172,14 @@ middleware:
 hazelcast:
   apps:
     backend_engine:
+      ignore: true 
       replicaCount: 2
       image:
         repository: nginx
         tag: stable
+
     funnel: 
+      ignore: true 
       replicaCount: 2
       image:
         repository: nginx

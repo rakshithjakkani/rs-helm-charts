@@ -1,17 +1,17 @@
-{{- if not .Values.apps.edgeui.ignore }}
+{{- if not .Values.apps.backend_engine.ignore }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-edge-ui
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-backend-engine
   labels:
-    {{- include "edgeui.labels" . | nindent 4 }}
+    {{- include "hazelcast.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.apps.edgeui.replicaCount }}
+  replicas: {{ .Values.apps.backend_engine.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "edgeui.selectorLabels" . | nindent 6 }}
+      {{- include "hazelcast.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,7 +19,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "edgeui.labels" . | nindent 8 }}
+        {{- include "hazelcast.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -28,7 +28,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "edgeui.serviceAccountName" . }}
+      serviceAccountName: {{ include "hazelcast.serviceAccountName" . }}
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
@@ -39,7 +39,7 @@ spec:
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          image: "{{ .Values.apps.edgeui.image.repository }}:{{ .Values.apps.edgeui.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.apps.backend_engine.image.repository }}:{{ .Values.apps.backend_engine.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
