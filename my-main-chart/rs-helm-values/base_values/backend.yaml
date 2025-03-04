@@ -122,55 +122,8 @@ tolerations: []
 
 affinity: {}
 
-edgeui:
-  apps:
-    edgeui:
-      ignore: true 
-      replicaCount: 2
-      image:
-        repository: nginx
-        tag: stable
-      
 
-middleware:
-  apps:
-    web_server:
-      ignore: true
-      replicaCount: 1
-      image:
-        repository: nginx
-        tag: stable
-
-    rest_server: 
-      ignore: true 
-      replicaCount: 1
-      image:
-        repository: nginx
-        tag: stable
-
-    indicative_server:
-      ignore: false 
-      replicaCount: 1
-      image:
-        repository: nginx
-        tag: stable
-
-    reporting_server: 
-      ignore: true 
-      replicaCount: 1
-      image:
-        repository: nginx
-        tag: stable
-
-    search_server: 
-      ignore: true 
-      replicaCount: 1
-      image:
-        repository: nginx
-        tag: stable
-
-
-hazelcast:
+backend:
   apps:
     backend_engine:
       ignore: true 
