@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "my-subchart.fullname" . }}
+  name: {{ .Release.Name }}-edge-ui
   labels:
-    {{- include "my-subchart.labels" . | nindent 4 }}
+    {{- include "edgeui.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.apps.nignx.replicaCount }}
+  replicas: {{ .Values.apps.edgeui.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "my-subchart.selectorLabels" . | nindent 6 }}
+      {{- include "edgeui.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,7 +18,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "my-subchart.labels" . | nindent 8 }}
+        {{- include "edgeui.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -27,7 +27,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "my-subchart.serviceAccountName" . }}
+      serviceAccountName: {{ include "edgeui.serviceAccountName" . }}
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
@@ -38,7 +38,7 @@ spec:
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.apps.edgeui.image.repository }}:{{ .Values.apps.edgeui.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
